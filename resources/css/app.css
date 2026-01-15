@@ -164,6 +164,32 @@ body {
     color: var(--text-gray);
 }
 
+.btn-logout {
+    width: 100%;
+    padding: 0.625rem 1rem;
+    background: var(--danger);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+.btn-logout i {
+    font-size: 1rem;
+}
+
 /* Main Content */
 .main-content {
     flex: 1;

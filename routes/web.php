@@ -18,10 +18,10 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-// Ruta principal - Redirigir al Dashboard o Login
+// Ruta principal - Landing Page (siempre muestra bienvenida)
 Route::get('/', function () {
-    return auth()->check() ? redirect()->route('dashboard') : redirect()->route('login');
-});
+    return view('welcome');
+})->name('welcome');
 
 // Rutas protegidas (requieren autenticación)
 Route::middleware(['auth'])->group(function () {

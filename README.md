@@ -69,7 +69,7 @@ Un sistema completo para crear, organizar, versionar y compartir prompts para mo
 ### 🧪 Calidad de Código
 
 -   ✅ 12 tests automatizados
--   ✅ Validaciones centralizadas  
+-   ✅ Validaciones centralizadas
 -   ✅ Código documentado
 -   ✅ Políticas de autorización
 

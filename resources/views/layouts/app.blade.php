@@ -82,6 +82,13 @@
                         <p class="user-role">Estudiante</p>
                     </div>
                 </div>
+                <form method="POST" action="{{ route('logout') }}" style="margin-top: 10px;">
+                    @csrf
+                    <button type="submit" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Cerrar Sesión</span>
+                    </button>
+                </form>
             </div>
         </aside>
         
