@@ -21,7 +21,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
-<body data-theme="{{ Auth::check() ? Auth::user()->tema_preferido : 'light' }}">
+<body data-theme="{{ auth()->check() && auth()->user()->tema_preferido ? auth()->user()->tema_preferido : 'light' }}">
     <div class="app-container">
         <!-- Sidebar -->
         <aside class="sidebar">
@@ -75,10 +75,10 @@
             <div class="sidebar-footer">
                 <div class="user-info">
                     <div class="user-avatar">
-                        <span>{{ strtoupper(substr(auth()->user()->name ?? 'UD', 0, 2)) }}</span>
+                        <span>{{ auth()->check() ? strtoupper(substr(auth()->user()->name, 0, 2)) : 'UD' }}</span>
                     </div>
                     <div class="user-details">
-                        <p class="user-name">{{ auth()->user()->name ?? 'Usuario Demo' }}</p>
+                        <p class="user-name">{{ auth()->check() ? auth()->user()->name : 'Usuario Demo' }}</p>
                         <p class="user-role">Estudiante</p>
                     </div>
                 </div>

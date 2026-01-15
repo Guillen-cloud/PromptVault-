@@ -1,9 +1,10 @@
 # 🚀 Guía de Colaboración - PromptVault
 
 ## 📌 Información del Proyecto
-- **Nombre:** PromptVault - Sistema de Gestión de Prompts
-- **Repositorio:** https://github.com/Guillen-cloud/PromptVault-
-- **Tecnologías:** Laravel 11, PHP, MySQL, Vite, CSS
+
+-   **Nombre:** PromptVault - Sistema de Gestión de Prompts
+-   **Repositorio:** https://github.com/Guillen-cloud/PromptVault-
+-   **Tecnologías:** Laravel 11, PHP, MySQL, Vite, CSS
 
 ---
 
@@ -117,21 +118,25 @@ git push origin main
 ## 🔧 Comandos Útiles
 
 ### Ver historial de cambios
+
 ```bash
 git log --oneline
 ```
 
 ### Ver quién modificó un archivo
+
 ```bash
 git blame nombre-archivo.php
 ```
 
 ### Descartar cambios locales (CUIDADO)
+
 ```bash
 git checkout -- nombre-archivo.php
 ```
 
 ### Volver a un commit anterior
+
 ```bash
 git log --oneline  # busca el ID del commit
 git checkout [ID-commit] nombre-archivo.php
@@ -203,45 +208,50 @@ ProyectoFinal_v1/
 ## 🎯 División de Trabajo (Ejemplo)
 
 ### Persona 1: Backend - Prompts
-- Controlador de prompts
-- Validaciones
-- Filtros y búsqueda
+
+-   Controlador de prompts
+-   Validaciones
+-   Filtros y búsqueda
 
 ### Persona 2: Backend - Categorías/Etiquetas
-- Sistema de categorización
-- Gestión de etiquetas
-- Relaciones
+
+-   Sistema de categorización
+-   Gestión de etiquetas
+-   Relaciones
 
 ### Persona 3: Frontend - Diseño
-- Mejoras de UI/UX
-- Responsividad
-- Animaciones
+
+-   Mejoras de UI/UX
+-   Responsividad
+-   Animaciones
 
 ### Persona 4: Base de Datos/Testing
-- Optimización de consultas
-- Seeders
-- Tests
+
+-   Optimización de consultas
+-   Seeders
+-   Tests
 
 ---
 
 ## 📞 Contacto
 
 **Ante cualquier duda:**
-- Pregunta en el grupo antes de hacer cambios grandes
-- Usa Issues en GitHub para reportar bugs
-- Documenta funcionalidades nuevas
+
+-   Pregunta en el grupo antes de hacer cambios grandes
+-   Usa Issues en GitHub para reportar bugs
+-   Documenta funcionalidades nuevas
 
 ---
 
 ## 📝 Checklist para Cada Sesión
 
-- [ ] `git pull origin main`
-- [ ] Trabajar en tu funcionalidad
-- [ ] Probar que funciona
-- [ ] `git add .`
-- [ ] `git commit -m "Mensaje descriptivo"`
-- [ ] `git push origin main`
-- [ ] Avisar al grupo qué completaste
+-   [ ] `git pull origin main`
+-   [ ] Trabajar en tu funcionalidad
+-   [ ] Probar que funciona
+-   [ ] `git add .`
+-   [ ] `git commit -m "Mensaje descriptivo"`
+-   [ ] `git push origin main`
+-   [ ] Avisar al grupo qué completaste
 
 ---
 
