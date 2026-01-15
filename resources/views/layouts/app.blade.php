@@ -31,65 +31,46 @@
             </div>
             
             <nav class="sidebar-nav">
-                <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}" title="{{ __('Dashboard') }}">
                     <i class="fas fa-chart-line"></i>
                     <span>{{ __('Dashboard') }}</span>
                 </a>
                 
-                <a href="{{ route('prompts.index') }}" class="nav-item {{ request()->routeIs('prompts.*') ? 'active' : '' }}">
+                <a href="{{ route('prompts.index') }}" class="nav-item {{ request()->routeIs('prompts.*') ? 'active' : '' }}" title="{{ __('Prompts') }}">
                     <i class="fas fa-file-alt"></i>
                     <span>{{ __('Prompts') }}</span>
                 </a>
                 
-                <a href="{{ route('categorias.index') }}" class="nav-item {{ request()->routeIs('categorias.*') ? 'active' : '' }}">
+                <a href="{{ route('categorias.index') }}" class="nav-item {{ request()->routeIs('categorias.*') ? 'active' : '' }}" title="{{ __('Categorías') }}">
                     <i class="fas fa-folder"></i>
                     <span>{{ __('Categorías') }}</span>
                 </a>
                 
-                <a href="{{ route('etiquetas.index') }}" class="nav-item {{ request()->routeIs('etiquetas.*') ? 'active' : '' }}">
+                <a href="{{ route('etiquetas.index') }}" class="nav-item {{ request()->routeIs('etiquetas.*') ? 'active' : '' }}" title="{{ __('Etiquetas') }}">
                     <i class="fas fa-tags"></i>
                     <span>{{ __('Etiquetas') }}</span>
                 </a>
                 
-                <a href="{{ route('versiones.index') }}" class="nav-item {{ request()->routeIs('versiones.*') ? 'active' : '' }}">
+                <a href="{{ route('versiones.index') }}" class="nav-item {{ request()->routeIs('versiones.*') ? 'active' : '' }}" title="{{ __('Versiones') }}">
                     <i class="fas fa-code-branch"></i>
                     <span>{{ __('Versiones') }}</span>
                 </a>
                 
-                <a href="{{ route('compartidos.index') }}" class="nav-item {{ request()->routeIs('compartidos.*') ? 'active' : '' }}">
+                <a href="{{ route('compartidos.index') }}" class="nav-item {{ request()->routeIs('compartidos.*') ? 'active' : '' }}" title="{{ __('Compartidos') }}">
                     <i class="fas fa-share-alt"></i>
                     <span>{{ __('Compartidos') }}</span>
                 </a>
                 
-                <a href="{{ route('actividad.index') }}" class="nav-item {{ request()->routeIs('actividad.*') ? 'active' : '' }}">
+                <a href="{{ route('actividad.index') }}" class="nav-item {{ request()->routeIs('actividad.*') ? 'active' : '' }}" title="{{ __('Actividad') }}">
                     <i class="fas fa-history"></i>
                     <span>{{ __('Actividad') }}</span>
                 </a>
                 
-                <a href="{{ route('configuracion.index') }}" class="nav-item {{ request()->routeIs('configuracion.*') ? 'active' : '' }}">
+                <a href="{{ route('configuracion.index') }}" class="nav-item {{ request()->routeIs('configuracion.*') ? 'active' : '' }}" title="{{ __('Configuración') }}">
                     <i class="fas fa-cog"></i>
                     <span>{{ __('Configuración') }}</span>
                 </a>
             </nav>
-            
-            <div class="sidebar-footer">
-                <div class="user-info">
-                    <div class="user-avatar">
-                        <span>{{ auth()->check() ? strtoupper(substr(auth()->user()->name, 0, 2)) : 'UD' }}</span>
-                    </div>
-                    <div class="user-details">
-                        <p class="user-name">{{ auth()->check() ? auth()->user()->name : 'Usuario Demo' }}</p>
-                        <p class="user-role">Estudiante</p>
-                    </div>
-                </div>
-                <form method="POST" action="{{ route('logout') }}" style="margin-top: 10px;">
-                    @csrf
-                    <button type="submit" class="btn-logout">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Cerrar Sesión</span>
-                    </button>
-                </form>
-            </div>
         </aside>
         
         <!-- Main Content -->
@@ -235,5 +216,35 @@
     <div id="toast" class="toast"></div>
     
     @stack('scripts')
+    
+    <script>
+    // Sidebar hover automático
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.querySelector('.sidebar');
+        const mainContent = document.querySelector('.main-content');
+        
+        // Iniciar colapsado por defecto en desktop
+        if (window.innerWidth > 768) {
+            sidebar.classList.add('collapsed');
+            mainContent.classList.add('sidebar-collapsed');
+        }
+        
+        // Expandir al hover
+        sidebar.addEventListener('mouseenter', function() {
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('collapsed');
+                mainContent.classList.remove('sidebar-collapsed');
+            }
+        });
+        
+        // Contraer al salir
+        sidebar.addEventListener('mouseleave', function() {
+            if (window.innerWidth > 768) {
+                sidebar.classList.add('collapsed');
+                mainContent.classList.add('sidebar-collapsed');
+            }
+        });
+    });
+    </script>
 </body>
 </html>

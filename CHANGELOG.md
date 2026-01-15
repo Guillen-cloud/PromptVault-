@@ -7,6 +7,42 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.5.1] - 2026-01-15
+
+### ✨ Añadido
+
+-   **Sidebar con Hover Automático**
+    -   Sidebar inicia en modo mini (70px) mostrando solo iconos
+    -   Se expande automáticamente al acercar el cursor
+    -   Se contrae automáticamente al alejar el cursor
+    -   Transiciones suaves con cubic-bezier para efecto profesional
+    -   Tooltips aparecen al hover sobre iconos en modo colapsado
+    -   Sin necesidad de hacer click, totalmente automático
+
+### 🗑️ Eliminado
+
+-   **Sección de Usuario del Sidebar**
+    -   Removido avatar de usuario
+    -   Removido nombre y rol del usuario
+    -   Removido botón "Cerrar Sesión" del sidebar
+    -   Sidebar más limpio y enfocado en navegación
+
+### 🔧 Mejoras
+
+-   **UX del Sidebar**
+    -   Comportamiento más intuitivo con hover automático
+    -   Mayor espacio en pantalla con sidebar contraído por defecto
+    -   Animaciones más fluidas (cubic-bezier)
+    -   Sidebar con sombra sutil al hacer hover
+    -   Overflow-x: hidden para evitar barras de desplazamiento horizontales
+
+### 📱 Responsive
+
+-   En mobile (≤768px) el sidebar se muestra completo por defecto
+-   Comportamiento hover solo aplica en desktop
+
+---
+
 ## [1.5.0] - 2026-01-15
 
 ### ✨ Añadido

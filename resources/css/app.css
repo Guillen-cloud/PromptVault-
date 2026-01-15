@@ -80,6 +80,7 @@ body {
 .sidebar-header {
     padding: 1.5rem;
     border-bottom: 1px solid var(--border-gray);
+    position: relative;
 }
 
 .logo {
@@ -87,11 +88,13 @@ body {
     font-weight: 700;
     color: var(--primary-blue);
     margin-bottom: 0.25rem;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .logo-subtitle {
     font-size: 0.75rem;
     color: var(--text-gray);
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .sidebar-nav {
@@ -105,7 +108,7 @@ body {
     padding: 0.75rem 1.5rem;
     color: var(--text-gray);
     text-decoration: none;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
 }
 
 .nav-item:hover {
@@ -123,6 +126,11 @@ body {
     width: 20px;
     margin-right: 0.75rem;
     font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-item span {
+    transition: opacity 0.3s ease, visibility 0.3s ease, width 0.3s ease;
 }
 
 .sidebar-footer {
@@ -155,6 +163,7 @@ body {
 
 .user-details {
     flex: 1;
+    transition: opacity 0.3s ease, visibility 0.3s ease, width 0.3s ease;
 }
 
 .user-name {
@@ -182,7 +191,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);
 }
 
@@ -195,6 +204,125 @@ body {
 .btn-logout i {
     font-size: 1rem;
 }
+
+/* ============================================
+   SIDEBAR COLAPSABLE CON HOVER
+   ============================================ */
+
+/* Sidebar con transición suave */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--bg-white);
+    border-right: 1px solid var(--border-gray);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+}
+
+/* Sidebar colapsado (mini-mode por defecto) */
+.sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar.collapsed .sidebar-header .logo,
+.sidebar.collapsed .sidebar-header .logo-subtitle {
+    opacity: 0;
+    visibility: hidden;
+    white-space: nowrap;
+}
+
+.sidebar.collapsed .nav-item span {
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+    white-space: nowrap;
+}
+
+.sidebar.collapsed .nav-item {
+    justify-content: center;
+    padding: 0.75rem;
+}
+
+.sidebar.collapsed .nav-item i {
+    margin-right: 0;
+    font-size: 1.25rem;
+}
+
+.sidebar.collapsed .nav-item.active {
+    border-left: none;
+    background: #eff6ff;
+}
+
+/* Ajustar main-content cuando sidebar está colapsado */
+.main-content {
+    margin-left: var(--sidebar-width);
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-content.sidebar-collapsed {
+    margin-left: 70px;
+}
+
+/* Tooltips para sidebar colapsado */
+.sidebar.collapsed .nav-item {
+    position: relative;
+}
+
+.sidebar.collapsed .nav-item::after {
+    content: attr(title);
+    position: absolute;
+    left: 70px;
+    background: var(--text-dark);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    z-index: 1002;
+}
+
+.sidebar.collapsed .nav-item:hover::after {
+    opacity: 1;
+    visibility: visible;
+    left: 75px;
+}
+
+/* Efecto suave en hover del sidebar completo */
+.sidebar:hover {
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        width: var(--sidebar-width);
+    }
+    
+    .sidebar.collapsed {
+        width: var(--sidebar-width);
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .main-content.sidebar-collapsed {
+        margin-left: 0;
+    }
+}
+
+/* ============================================
+   FIN SIDEBAR COLAPSABLE
+   ============================================ */
 
 /* Loading spinner animation */
 @keyframes spin {
