@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('prompts/{prompt}/toggle-favorite', [PromptController::class, 'toggleFavorite'])->name('prompts.toggleFavorite');
     Route::post('prompts/{prompt}/favorito', [PromptController::class, 'toggleFavorito'])->name('prompts.favorito');
     Route::get('prompts/{prompt}/copy', [PromptController::class, 'copy'])->name('prompts.copy');
+    Route::get('prompts-export', [PromptController::class, 'export'])->name('prompts.export');
 
     // Rutas de Categorías
     Route::resource('categorias', CategoriaController::class);

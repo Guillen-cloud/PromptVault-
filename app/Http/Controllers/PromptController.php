@@ -237,4 +237,77 @@ class PromptController extends Controller
             'message' => 'Prompt copiado al portapapeles'
         ]);
     }
+
+    /**
+     * Exportar prompts del usuario a CSV
+     */
+    public function export(Request $request)
+    {
+        $query = Prompt::with(['categoria', 'etiquetas'])
+            ->where('user_id', auth()->id());
+
+        // Aplicar filtros si existen
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('titulo', 'like', "%{$search}%")
+                    ->orWhere('contenido', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('categoria_id')) {
+            $query->where('categoria_id', $request->categoria_id);
+        }
+
+        $prompts = $query->get();
+
+        $filename = 'prompts_' . date('Y-m-d_His') . '.csv';
+        $headers = [
+            'Content-Type' => 'text/csv; charset=utf-8',
+            'Content-Disposition' => "attachment; filename=\"$filename\"",
+        ];
+
+        $callback = function() use ($prompts) {
+            $file = fopen('php://output', 'w');
+            
+            // BOM para UTF-8
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            
+            // Encabezados
+            fputcsv($file, [
+                'ID',
+                'Título',
+                'Descripción',
+                'Contenido',
+                'Categoría',
+                'Etiquetas',
+                'IA Destino',
+                'Público',
+                'Favorito',
+                'Veces Usado',
+                'Fecha Creación'
+            ]);
+
+            // Datos
+            foreach ($prompts as $prompt) {
+                fputcsv($file, [
+                    $prompt->id,
+                    $prompt->titulo,
+                    $prompt->descripcion,
+                    $prompt->contenido,
+                    $prompt->categoria->nombre ?? 'Sin categoría',
+                    $prompt->etiquetas->pluck('nombre')->join(', '),
+                    $prompt->ia_destino ?? 'N/A',
+                    $prompt->es_publico ? 'Sí' : 'No',
+                    $prompt->es_favorito ? 'Sí' : 'No',
+                    $prompt->veces_usado ?? 0,
+                    $prompt->created_at->format('Y-m-d H:i:s')
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

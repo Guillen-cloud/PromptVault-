@@ -14,9 +14,14 @@
         <h1 class="page-title">Mis Prompts</h1>
         <p class="page-subtitle">Gestiona todos tus prompts</p>
     </div>
-    <a href="{{ route('prompts.create') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Nuevo Prompt
-    </a>
+    <div style="display: flex; gap: 1rem;">
+        <a href="{{ route('prompts.export', request()->all()) }}" class="btn btn-secondary">
+            <i class="fas fa-download"></i> Exportar CSV
+        </a>
+        <a href="{{ route('prompts.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nuevo Prompt
+        </a>
+    </div>
 </div>
 
 <!-- Filtros -->
