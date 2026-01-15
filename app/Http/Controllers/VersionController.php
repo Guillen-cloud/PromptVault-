@@ -29,6 +29,13 @@ class VersionController extends Controller
     public function show(Version $version)
     {
         $version->load('prompt');
+
+        // Verificar que la versión tenga un prompt asociado
+        if (!$version->prompt) {
+            return redirect()->route('versiones.index')
+                ->with('error', 'La versión no tiene un prompt asociado válido.');
+        }
+
         return view('versiones.show', compact('version'));
     }
 
@@ -38,6 +45,13 @@ class VersionController extends Controller
     public function compare(Version $version)
     {
         $version->load('prompt');
+
+        // Verificar que la versión tenga un prompt asociado
+        if (!$version->prompt) {
+            return redirect()->route('versiones.index')
+                ->with('error', 'La versión no tiene un prompt asociado válido.');
+        }
+
         $prompt = $version->prompt;
 
         return view('versiones.compare', compact('version', 'prompt'));
@@ -51,6 +65,11 @@ class VersionController extends Controller
         DB::beginTransaction();
         try {
             $prompt = $version->prompt;
+
+            // Verificar que la versión tenga un prompt asociado
+            if (!$prompt) {
+                return back()->with('error', 'La versión no tiene un prompt asociado válido.');
+            }
 
             // Guardar la versión actual antes de restaurar
             $prompt->versiones()->create([
