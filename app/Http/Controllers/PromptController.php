@@ -13,16 +13,6 @@ use Illuminate\Support\Facades\DB;
 class PromptController extends Controller
 {
     /**
-     * Constructor - aplicar middleware can
-     */
-    public function __construct()
-    {
-        $this->middleware('can:view,prompt')->only(['show']);
-        $this->middleware('can:update,prompt')->only(['edit', 'update']);
-        $this->middleware('can:delete,prompt')->only(['destroy']);
-    }
-
-    /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
