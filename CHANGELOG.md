@@ -7,6 +7,51 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.3.0] - 2026-01-15
+
+### ✨ Añadido
+
+#### Funcionalidades Avanzadas
+
+-   **Página 404 Personalizada (errors/404.blade.php)**
+
+    -   Diseño moderno con gradiente consistente con el resto de la aplicación
+    -   Código de error grande (404) con iconos Font Awesome
+    -   Mensajes amigables y orientadores para el usuario
+    -   Botones de navegación contextuales según estado de autenticación
+    -   Sección de sugerencias con páginas populares para usuarios autenticados
+    -   Totalmente responsive para móviles y tablets
+    -   Manejo automático por Laravel cuando una ruta no existe
+
+-   **Exportar Prompts a CSV**
+    -   Función `export()` en PromptController
+    -   Botón "Exportar CSV" en la vista de índice de prompts
+    -   Respeta filtros activos (búsqueda, categoría, etiquetas)
+    -   Formato CSV con UTF-8 BOM para compatibilidad con Excel
+    -   Nombre de archivo con timestamp: `prompts_YYYY-MM-DD_HHMMSS.csv`
+    -   Columnas exportadas:
+        -   ID del prompt
+        -   Título y descripción
+        -   Contenido completo
+        -   Categoría asociada
+        -   Etiquetas (separadas por coma)
+        -   IA destino
+        -   Estado público/privado
+        -   Marcado como favorito
+        -   Número de veces usado
+        -   Fecha de creación
+    -   Descarga directa sin necesidad de almacenamiento temporal
+
+### ✅ Confirmado
+
+-   **Paginación en Prompts**
+    -   Ya implementada con `paginate(10)`
+    -   10 prompts por página
+    -   Links de navegación estilizados
+    -   Funciona correctamente con filtros
+
+---
+
 ## [1.2.0] - 2026-01-15
 
 ### ✨ Añadido
