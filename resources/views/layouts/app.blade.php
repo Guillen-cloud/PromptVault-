@@ -114,13 +114,14 @@
                         <button class="header-btn" onclick="toggleDropdown('languageMenu', event)">
                             <i class="fas fa-globe"></i>
                             <span class="language-text">{{ strtoupper(app()->getLocale()) }}</span>
+                            <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.25rem;"></i>
                         </button>
                         <div class="dropdown-menu" id="languageMenu">
-                            <a href="#" onclick="changeLanguage('es')" class="dropdown-item {{ app()->getLocale() === 'es' ? 'active' : '' }}">
-                                <i class="fas fa-flag"></i> Español
+                            <a href="#" onclick="event.preventDefault(); changeLanguage('es')" class="dropdown-item {{ app()->getLocale() === 'es' ? 'active' : '' }}">
+                                <span style="font-size: 1.2rem; margin-right: 0.5rem;">🇪🇸</span> Español
                             </a>
-                            <a href="#" onclick="changeLanguage('en')" class="dropdown-item {{ app()->getLocale() === 'en' ? 'active' : '' }}">
-                                <i class="fas fa-flag"></i> English
+                            <a href="#" onclick="event.preventDefault(); changeLanguage('en')" class="dropdown-item {{ app()->getLocale() === 'en' ? 'active' : '' }}">
+                                <span style="font-size: 1.2rem; margin-right: 0.5rem;">🇬🇧</span> English
                             </a>
                         </div>
                     </div>
@@ -167,11 +168,7 @@
                             <div class="user-avatar-small">
                                 <span>{{ auth()->check() ? strtoupper(substr(auth()->user()->name, 0, 2)) : 'U' }}</span>
                             </div>
-                            <div class="user-info-header">
-                                <span class="user-name-header">{{ auth()->check() ? auth()->user()->name : 'Usuario' }}</span>
-                                <span class="user-role-header">Estudiante</span>
-                            </div>
-                            <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" id="userMenu">
                             <div class="dropdown-user-info">
