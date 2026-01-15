@@ -7,6 +7,99 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.2.0] - 2026-01-15
+
+### ✨ Añadido
+
+#### Landing Page Profesional
+
+-   **Página de Bienvenida (welcome.blade.php)**
+    -   Diseño moderno con gradiente púrpura-violeta
+    -   Navbar con logo y botones de acceso
+    -   Hero section con título destacado y call-to-action
+    -   Grid de 6 características principales
+    -   Sección de estadísticas (Prompts Ilimitados, Organización, Seguridad)
+    -   Totalmente responsive
+    -   Ruta `/` ahora muestra landing page para usuarios no autenticados
+    -   Ruta `/welcome` siempre accesible
+
+#### Mejoras UI/UX
+
+-   **Loading Spinners**
+
+    -   Spinners automáticos en todos los formularios al enviar
+    -   Animación de rotación con Font Awesome
+    -   Deshabilitación automática de botones durante carga
+    -   Texto "Cargando..." con icono giratorio
+    -   Restauración automática del estado original
+
+-   **Confirmaciones Elegantes con SweetAlert2**
+
+    -   Reemplazadas confirmaciones nativas (`alert()`) por diálogos elegantes
+    -   Iconos y colores personalizados por tipo de acción
+    -   Botones con iconos Font Awesome
+    -   Animaciones suaves y diseño moderno
+    -   Configuración de colores: rojo para eliminar, gris para cancelar
+
+-   **Sistema de Breadcrumbs**
+
+    -   Navegación breadcrumb en todas las páginas (excepto dashboard)
+    -   Iconos Font Awesome para cada sección
+    -   Link al home siempre visible
+    -   Estilos hover suaves
+    -   Integrado en layout principal
+
+-   **Botón Cerrar Sesión Mejorado**
+    -   Posición sticky en sidebar footer (siempre visible)
+    -   Diseño destacado con color rojo y sombra
+    -   Icono de salida
+    -   Efecto hover más pronunciado
+    -   Fondo blanco para contraste
+
+### 🗑️ Eliminado
+
+#### Limpieza de Archivos Innecesarios
+
+-   **Archivos SQL duplicados**
+
+    -   `database/laravel_tables.sql`
+    -   `database/promptvault_schema.sql`
+    -   `database/schema.sql`
+    -   `database/seed_data.sql`
+
+-   **Scripts no utilizados**
+
+    -   `clean_prompts.py` - Script Python innecesario
+    -   `crear_db.sql` - Duplicado de migraciones
+    -   `setup_database.bat` - Script Windows no requerido
+
+-   **Tests de ejemplo**
+    -   `tests/Feature/ExampleTest.php` - Test que fallaba
+    -   `tests/Unit/ExampleTest.php` - Test no utilizado
+
+### 🔄 Modificado
+
+#### Rutas (web.php)
+
+-   Ruta raíz `/` ahora muestra landing page
+-   Ruta `/welcome` agregada para acceso directo a landing
+-   Ruta de logout implementada correctamente
+
+#### Layout Principal (app.blade.php)
+
+-   Agregada sección de breadcrumbs
+-   Botón de cerrar sesión movido a sidebar footer
+-   Estilos mejorados para botón de sesión
+
+#### Estilos (app.css)
+
+-   Agregados estilos para breadcrumbs
+-   Agregada animación de spinner
+-   Estilos para estados disabled de botones
+-   Mejoras en sidebar footer (sticky positioning)
+
+---
+
 ## [1.1.0] - 2026-01-15
 
 ### ✨ Añadido
