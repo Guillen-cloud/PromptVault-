@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\DB;
 class PromptController extends Controller
 {
     /**
-     * Constructor - registrar políticas
+     * Constructor - aplicar middleware can
      */
     public function __construct()
     {
-        $this->authorizeResource(Prompt::class, 'prompt');
+        $this->middleware('can:view,prompt')->only(['show']);
+        $this->middleware('can:update,prompt')->only(['edit', 'update']);
+        $this->middleware('can:delete,prompt')->only(['destroy']);
     }
 
     /**
@@ -139,17 +141,7 @@ class PromptController extends Controller
         DB::beginTransaction();
         try {
             $validated = $request->validated();
-            'contenido' => 'required|string',
-            'descripcion' => 'nullable|string',
-            'categoria_id' => 'required|exists:categorias,id',
-            'ia_destino' => 'required|string|max:60',
-            'es_publico' => 'boolean',
-            'motivo_cambio' => 'nullable|string|max:255',
-            'etiquetas' => 'array'
-        ]);
 
-        DB::beginTransaction();
-        try {
             // Guardar versión anterior si el contenido cambió
             if ($prompt->contenido !== $validated['contenido']) {
                 $prompt->versiones()->create([
@@ -267,12 +259,12 @@ class PromptController extends Controller
             'Content-Disposition' => "attachment; filename=\"$filename\"",
         ];
 
-        $callback = function() use ($prompts) {
+        $callback = function () use ($prompts) {
             $file = fopen('php://output', 'w');
-            
+
             // BOM para UTF-8
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
-            
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
             // Encabezados
             fputcsv($file, [
                 'ID',
