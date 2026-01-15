@@ -7,6 +7,200 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.5.0] - 2026-01-15
+
+### ✨ Añadido
+
+#### Vista de Prompts Rediseñada - Cards con Sidebar de Filtros
+
+-   **Layout de Cards Moderno**
+
+    -   Grid responsive de cards en lugar de tabla tradicional
+    -   Cards grandes con información completa y visual
+    -   Hover effects con sombra y transformación suave
+    -   Border destacado al hacer hover (azul primario)
+    -   Diseño consistente con el resto de la aplicación
+
+-   **Sidebar de Filtros Avanzado**
+
+    -   Panel sticky a la izquierda (280px)
+    -   Secciones organizadas:
+        -   Búsqueda en tiempo real
+        -   Filtro por categorías con contador de prompts
+        -   Filtro por IA destino (ChatGPT, Claude, Gemini, etc.)
+        -   Filtro por estado (favoritos, públicos, compartidos)
+    -   Botón "Limpiar Filtros"
+    -   Opciones con radio buttons y checkboxes
+    -   Hover states en todas las opciones
+
+-   **Cards de Prompts Mejoradas**
+
+    -   **Header**: Título grande + badge de favorito + badges de categoría e IA
+    -   **Body**:
+        -   Descripción breve (120 caracteres)
+        -   Preview del contenido en caja con borde azul (150 caracteres)
+        -   Estilo código monospace para contenido
+    -   **Footer**:
+        -   Meta información: usos, versión, cantidad de etiquetas
+        -   Botones de acción: copiar, favorito, ver, editar, eliminar
+        -   Iconos con tooltip en hover
+        -   Botón eliminar con estilo danger (rojo)
+
+-   **Header de Lista Mejorado**
+
+    -   Contador destacado de prompts encontrados
+    -   Selector de ordenamiento (recientes, alfabético, más usados, última modificación)
+    -   Diseño en card con border
+
+-   **Estado Vacío Mejorado**
+    -   Card con borde punteado
+    -   Icono grande de inbox
+    -   Mensaje descriptivo
+    -   CTA grande para crear primer prompt
+
+#### Formulario de Crear Prompt - Con Preview en Tiempo Real
+
+-   **Layout de 2 Columnas**
+
+    -   Formulario a la izquierda (flexible)
+    -   Preview panel a la derecha (400px, sticky)
+    -   Responsive: preview se oculta en pantallas pequeñas
+
+-   **Campos Mejorados del Formulario**
+
+    -   **Título**: Input con contador de caracteres (0/100)
+    -   **Descripción**: Textarea con contador (0/250)
+    -   **Contenido**:
+        -   Toolbar con botones para insertar variables
+        -   Variables disponibles: {contexto}, {tarea}, {formato}, {idioma}
+        -   Textarea grande (12 filas) estilo código
+        -   Contador de caracteres y tip sobre variables
+        -   Font monospace para mejor legibilidad
+
+-   **Selector Visual de Categorías**
+
+    -   Grid de cards con iconos grandes
+    -   Cards seleccionables con radio buttons ocultos
+    -   Estados: default, hover (azul), selected (gradiente morado)
+    -   Iconos emoji grandes (2rem)
+    -   Texto centrado y claro
+
+-   **Selector de IA Mejorado**
+
+    -   Badges horizontales con iconos
+    -   Estados: default (gris), hover (azul claro), selected (azul)
+    -   Iconos Font Awesome para cada IA
+    -   Diseño compacto y visual
+
+-   **Etiquetas como Chips**
+
+    -   Grid flexible de tags
+    -   Checkboxes como chips redondeados
+    -   Estados: default (gris), hover (azul claro), selected (azul)
+    -   Icono de tag en cada chip
+
+-   **Opciones Adicionales**
+
+    -   Cards de checkbox grandes con descripciones
+    -   Opción "Público" con icono de globo
+    -   Opción "Favorito" con estrella amarilla
+    -   Hints descriptivos bajo cada opción
+    -   Background gris claro, hover azul claro
+
+-   **Panel de Preview en Tiempo Real**
+
+    -   **Header**: Gradiente morado con título y badge
+    -   **Card de Preview**:
+        -   Simula exactamente cómo se verá el prompt
+        -   Actualización instantánea mientras escribes
+        -   Badges de categoría e IA
+        -   Contenido en caja con borde azul
+        -   Meta información con iconos
+    -   **Tips Section**:
+        -   Background amarillo claro
+        -   5 tips para crear mejores prompts
+        -   Icono de bombilla
+        -   Lista ordenada
+
+### 🎨 Mejorado
+
+#### Internacionalización Completa
+
+-   **Archivos de Idioma Expandidos**
+
+    -   `lang/es.json`: 50+ traducciones agregadas
+    -   `lang/en.json`: 50+ traducciones agregadas
+    -   Traducciones para: sidebar, header, dashboard, notificaciones, menús
+
+-   **Vistas Traducidas**
+    -   `layouts/app.blade.php`: Uso de `{{ __('texto') }}` en sidebar, header, dropdowns
+    -   `dashboard.blade.php`: Todas las estadísticas y títulos traducidos
+    -   Sistema completo de cambio de idioma funcional
+
+#### Estilos CSS Optimizados
+
+-   **Prompts Layout**
+
+    -   Grid system con CSS Grid (280px + 1fr)
+    -   Responsive breakpoint a 1024px
+    -   Variables CSS consistentes en todo el diseño
+    -   Transiciones suaves (0.2s - 0.3s ease)
+    -   Z-index adecuado para elementos sticky
+
+-   **Form Styles**
+    -   Labels con peso 600 y gap consistente
+    -   Form helpers con colores apropiados
+    -   Estados de error con borde rojo
+    -   Contador de caracteres con color gris
+    -   Hints en azul primario
+
+### 🐛 Corregido
+
+-   **Dropdowns del Header**
+
+    -   CSS con `display: none !important` para forzar ocultación
+    -   Agregadas propiedades `opacity` y `visibility`
+    -   Clase `.show` con `!important` para mostrar
+    -   Build de producción ejecutado para aplicar cambios
+
+-   **Assets Compilados**
+    -   `npm run build` ejecutado
+    -   CSS y JS optimizados en `/public/build/`
+    -   Manifest actualizado
+
+### 📝 Técnico
+
+#### Archivos de Backup Creados
+
+-   `prompts/index_backup.blade.php` - Diseño de tabla original
+-   `prompts/create_backup.blade.php` - Formulario original
+
+#### JavaScript Agregado
+
+-   **create.blade.php**:
+    -   Funciones de contador de caracteres
+    -   `insertVariable()` para toolbar
+    -   `updatePreview()` para actualización en tiempo real
+    -   Event listeners para inputs y selects
+    -   Inicialización de preview al cargar
+-   **index.blade.php**:
+    -   `copyToClipboard()` con notificación toast
+    -   `toggleFavorite()` preparado para AJAX
+    -   `clearFilters()` para resetear filtros
+    -   SweetAlert2 para confirmaciones de eliminación
+
+#### Estructura de Archivos
+
+```
+resources/views/prompts/
+├── index.blade.php (nuevo diseño cards)
+├── index_backup.blade.php (tabla original)
+├── create.blade.php (nuevo con preview)
+└── create_backup.blade.php (formulario original)
+```
+
+---
+
 ## [1.4.0] - 2026-01-15
 
 ### ✨ Añadido

@@ -5,8 +5,8 @@
 @section('content')
 <div class="page-header">
     <div>
-        <h1 class="page-title">Dashboard</h1>
-        <p class="page-subtitle">Resumen general del sistema</p>
+        <h1 class="page-title">{{ __('Dashboard') }}</h1>
+        <p class="page-subtitle">{{ __('Resumen general del sistema') }}</p>
     </div>
 </div>
 
@@ -14,7 +14,7 @@
 <div class="stats-grid">
     <div class="stat-card">
         <div class="stat-content">
-            <h3>Total de Prompts</h3>
+            <h3>{{ __('Total de Prompts') }}</h3>
             <div class="stat-value">{{ $totalPrompts }}</div>
         </div>
         <div class="stat-icon blue">
@@ -24,7 +24,7 @@
     
     <div class="stat-card">
         <div class="stat-content">
-            <h3>Prompts Favoritos</h3>
+            <h3>{{ __('Prompts Favoritos') }}</h3>
             <div class="stat-value">{{ $promptsFavoritos }}</div>
         </div>
         <div class="stat-icon yellow">
@@ -34,7 +34,7 @@
     
     <div class="stat-card">
         <div class="stat-content">
-            <h3>Prompts Compartidos</h3>
+            <h3>{{ __('Prompts Compartidos') }}</h3>
             <div class="stat-value">{{ $promptsCompartidos }}</div>
         </div>
         <div class="stat-icon green">
@@ -44,7 +44,7 @@
     
     <div class="stat-card">
         <div class="stat-content">
-            <h3>Más Usados Este Mes</h3>
+            <h3>{{ __('Más Usados Este Mes') }}</h3>
             <div class="stat-value">{{ $promptsMasUsados }}</div>
         </div>
         <div class="stat-icon purple">
@@ -58,15 +58,15 @@
     <!-- Prompts por Categoría -->
     <div class="card">
         <div class="card-header">
-            <h2 class="card-title">Prompts por Categoría</h2>
+            <h2 class="card-title">{{ __('Prompts por Categoría') }}</h2>
         </div>
         <canvas id="categoryChart" height="200"></canvas>
         <div class="chart-legend">
             @foreach($promptsPorCategoria as $categoria)
             <div class="legend-item" style="margin-bottom: 0.75rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-weight: 500;">{{ $categoria->nombre }}</span>
-                    <span style="color: var(--text-gray); font-size: 0.875rem;">{{ $categoria->prompts_count }} prompts</span>
+                    <span style="font-weight: 500;">{{ __($categoria->nombre) }}</span>
+                    <span style="color: var(--text-gray); font-size: 0.875rem;">{{ $categoria->prompts_count }} {{ __('prompts') }}</span>
                 </div>
                 <div style="width: 100%; height: 8px; background: var(--bg-gray); border-radius: 4px; margin-top: 0.25rem; overflow: hidden;">
                     <div style="width: {{ $totalPrompts > 0 ? ($categoria->prompts_count / $totalPrompts * 100) : 0 }}%; height: 100%; background: 
@@ -85,8 +85,8 @@
     <!-- Prompts Recientes -->
     <div class="card">
         <div class="card-header">
-            <h2 class="card-title">Prompts Recientes</h2>
-            <a href="{{ route('prompts.index') }}" class="btn btn-sm btn-secondary">Ver todos</a>
+            <h2 class="card-title">{{ __('Prompts Recientes') }}</h2>
+            <a href="{{ route('prompts.index') }}" class="btn btn-sm btn-secondary">{{ __('Ver todos') }}</a>
         </div>
         
         @forelse($promptsRecientes as $prompt)

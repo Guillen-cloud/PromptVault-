@@ -27,48 +27,48 @@
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h1 class="logo">PromptVault</h1>
-                <p class="logo-subtitle">Sistema de Gestión de Prompts</p>
+                <p class="logo-subtitle">{{ __('Sistema de Gestión de Prompts') }}</p>
             </div>
             
             <nav class="sidebar-nav">
                 <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <i class="fas fa-chart-line"></i>
-                    <span>Dashboard</span>
+                    <span>{{ __('Dashboard') }}</span>
                 </a>
                 
                 <a href="{{ route('prompts.index') }}" class="nav-item {{ request()->routeIs('prompts.*') ? 'active' : '' }}">
                     <i class="fas fa-file-alt"></i>
-                    <span>Prompts</span>
+                    <span>{{ __('Prompts') }}</span>
                 </a>
                 
                 <a href="{{ route('categorias.index') }}" class="nav-item {{ request()->routeIs('categorias.*') ? 'active' : '' }}">
                     <i class="fas fa-folder"></i>
-                    <span>Categorías</span>
+                    <span>{{ __('Categorías') }}</span>
                 </a>
                 
                 <a href="{{ route('etiquetas.index') }}" class="nav-item {{ request()->routeIs('etiquetas.*') ? 'active' : '' }}">
                     <i class="fas fa-tags"></i>
-                    <span>Etiquetas</span>
+                    <span>{{ __('Etiquetas') }}</span>
                 </a>
                 
                 <a href="{{ route('versiones.index') }}" class="nav-item {{ request()->routeIs('versiones.*') ? 'active' : '' }}">
                     <i class="fas fa-code-branch"></i>
-                    <span>Versiones</span>
+                    <span>{{ __('Versiones') }}</span>
                 </a>
                 
                 <a href="{{ route('compartidos.index') }}" class="nav-item {{ request()->routeIs('compartidos.*') ? 'active' : '' }}">
                     <i class="fas fa-share-alt"></i>
-                    <span>Compartidos</span>
+                    <span>{{ __('Compartidos') }}</span>
                 </a>
                 
                 <a href="{{ route('actividad.index') }}" class="nav-item {{ request()->routeIs('actividad.*') ? 'active' : '' }}">
                     <i class="fas fa-history"></i>
-                    <span>Actividad</span>
+                    <span>{{ __('Actividad') }}</span>
                 </a>
                 
                 <a href="{{ route('configuracion.index') }}" class="nav-item {{ request()->routeIs('configuracion.*') ? 'active' : '' }}">
                     <i class="fas fa-cog"></i>
-                    <span>Configuración</span>
+                    <span>{{ __('Configuración') }}</span>
                 </a>
             </nav>
             
@@ -99,7 +99,7 @@
                 <div class="header-left">
                     <div class="search-box">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Buscar prompts, categorías, etiquetas...">
+                        <input type="text" placeholder="{{ __('Buscar prompts, categorías, etiquetas...') }}">
                     </div>
                 </div>
                 
@@ -134,31 +134,31 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-wide" id="notificationsMenu">
                             <div class="dropdown-header">
-                                <span>Notificaciones</span>
-                                <a href="#" class="mark-all-read">Marcar todas como leídas</a>
+                                <span>{{ __('Notificaciones') }}</span>
+                                <a href="#" class="mark-all-read">{{ __('Marcar todas como leídas') }}</a>
                             </div>
                             <div class="notification-item unread">
                                 <i class="fas fa-info-circle text-primary"></i>
                                 <div>
-                                    <p class="notification-text">Bienvenido a PromptVault</p>
-                                    <span class="notification-time">Hace 5 min</span>
+                                    <p class="notification-text">{{ __('Bienvenido a PromptVault') }}</p>
+                                    <span class="notification-time">{{ __('Hace 5 min') }}</span>
                                 </div>
                             </div>
                             <div class="notification-item">
                                 <i class="fas fa-check-circle text-success"></i>
                                 <div>
-                                    <p class="notification-text">Prompt creado exitosamente</p>
-                                    <span class="notification-time">Hace 1 hora</span>
+                                    <p class="notification-text">{{ __('Prompt creado exitosamente') }}</p>
+                                    <span class="notification-time">{{ __('Hace 1 hora') }}</span>
                                 </div>
                             </div>
                             <div class="notification-item">
                                 <i class="fas fa-share-alt text-info"></i>
                                 <div>
-                                    <p class="notification-text">Prompt compartido con el equipo</p>
-                                    <span class="notification-time">Hace 2 horas</span>
+                                    <p class="notification-text">{{ __('Prompt compartido con el equipo') }}</p>
+                                    <span class="notification-time">{{ __('Hace 2 horas') }}</span>
                                 </div>
                             </div>
-                            <a href="#" class="dropdown-footer">Ver todas las notificaciones</a>
+                            <a href="#" class="dropdown-footer">{{ __('Ver todas las notificaciones') }}</a>
                         </div>
                     </div>
                     
@@ -182,16 +182,16 @@
                             </div>
                             <div class="dropdown-divider"></div>
                             <a href="{{ route('configuracion.index') }}" class="dropdown-item">
-                                <i class="fas fa-user-circle"></i> Mi Perfil
+                                <i class="fas fa-user-circle"></i> {{ __('Mi Perfil') }}
                             </a>
                             <a href="{{ route('configuracion.index') }}" class="dropdown-item">
-                                <i class="fas fa-cog"></i> Configuración
+                                <i class="fas fa-cog"></i> {{ __('Configuración') }}
                             </a>
                             <div class="dropdown-divider"></div>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="dropdown-item text-danger">
-                                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                                    <i class="fas fa-sign-out-alt"></i> {{ __('Cerrar Sesión') }}
                                 </button>
                             </form>
                         </div>
