@@ -27,6 +27,14 @@ Un sistema completo para crear, organizar, versionar y compartir prompts para mo
 
 ## ✨ Características
 
+### � Autenticación y Seguridad
+
+-   ✅ Sistema de login y registro
+-   ✅ Validación robusta con Form Requests
+-   ✅ Políticas de autorización (solo dueño edita)
+-   ✅ Protección de rutas con middleware
+-   ✅ Mensajes de error en español
+
 ### 📝 Gestión de Prompts
 
 -   ✅ Crear, editar y eliminar prompts
@@ -35,6 +43,7 @@ Un sistema completo para crear, organizar, versionar y compartir prompts para mo
 -   ✅ Filtros por categoría, etiqueta, IA destino
 -   ✅ Marcado de favoritos
 -   ✅ Contador de usos
+-   ✅ Prompts privados y públicos
 
 ### 🔄 Sistema de Versiones
 
@@ -56,6 +65,13 @@ Un sistema completo para crear, organizar, versionar y compartir prompts para mo
 -   ✅ Diseño moderno y responsive
 -   ✅ Tema claro/oscuro
 -   ✅ Multi-idioma (Español/Inglés)
+
+### 🧪 Calidad de Código
+
+-   ✅ 12 tests automatizados
+-   ✅ Validaciones centralizadas  
+-   ✅ Código documentado
+-   ✅ Políticas de autorización
 
 ---
 

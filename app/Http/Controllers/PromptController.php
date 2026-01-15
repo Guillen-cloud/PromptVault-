@@ -5,17 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Prompt;
 use App\Models\Categoria;
 use App\Models\Etiqueta;
+use App\Http\Requests\StorePromptRequest;
+use App\Http\Requests\UpdatePromptRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PromptController extends Controller
 {
     /**
+     * Constructor - registrar políticas
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Prompt::class, 'prompt');
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $query = Prompt::with(['categoria', 'etiquetas']);
+        $query = Prompt::with(['categoria', 'etiquetas'])
+            ->where('user_id', auth()->id())
+            ->orWhere('es_publico', true);
 
         // Búsqueda por palabra clave
         if ($request->filled('search')) {
@@ -72,21 +84,13 @@ class PromptController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePromptRequest $request)
     {
-        $validated = $request->validate([
-            'titulo' => 'required|string|max:180',
-            'contenido' => 'required|string',
-            'descripcion' => 'nullable|string',
-            'categoria_id' => 'required|exists:categorias,id',
-            'ia_destino' => 'required|string|max:60',
-            'es_publico' => 'boolean',
-            'etiquetas' => 'array'
-        ]);
-
         DB::beginTransaction();
         try {
-            $validated['user_id'] = 1; // Usuario demo por ahora
+            $validated = $request->validated();
+            $validated['user_id'] = auth()->id();
+
             $prompt = Prompt::create($validated);
 
             if ($request->filled('etiquetas')) {
@@ -130,10 +134,11 @@ class PromptController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Prompt $prompt)
+    public function update(UpdatePromptRequest $request, Prompt $prompt)
     {
-        $validated = $request->validate([
-            'titulo' => 'required|string|max:180',
+        DB::beginTransaction();
+        try {
+            $validated = $request->validated();
             'contenido' => 'required|string',
             'descripcion' => 'nullable|string',
             'categoria_id' => 'required|exists:categorias,id',
