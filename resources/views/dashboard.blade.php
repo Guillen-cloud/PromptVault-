@@ -8,16 +8,6 @@
         <h1 class="page-title">Dashboard</h1>
         <p class="page-subtitle">Resumen general del sistema</p>
     </div>
-    <div class="page-header-actions">
-        <select id="languageSelector" class="form-input" style="width: auto; min-width: 150px;">
-            <option value="es" {{ app()->getLocale() == 'es' ? 'selected' : '' }}>🇪🇸 Español</option>
-            <option value="en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>🇬🇧 English</option>
-            <option value="es-ar" {{ app()->getLocale() == 'es-ar' ? 'selected' : '' }}>🇦🇷 Español (AR)</option>
-            <option value="es-mx" {{ app()->getLocale() == 'es-mx' ? 'selected' : '' }}>🇲🇽 Español (MX)</option>
-            <option value="pt-br" {{ app()->getLocale() == 'pt' ? 'selected' : '' }}>🇧🇷 Português</option>
-            <option value="fr" {{ app()->getLocale() == 'fr' ? 'selected' : '' }}>🇫🇷 Français</option>
-        </select>
-    </div>
 </div>
 
 <!-- Stats Grid -->

@@ -23,12 +23,12 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 -   **Selector de Idioma Mejorado**
 
-    -   Dropdown con banderas de España e Inglaterra
-    -   Muestra idioma actual con nombre completo (Español / English)
+    -   Dropdown con banderas emoji (🇪🇸 🇬🇧)
+    -   Muestra solo código de idioma (ES/EN) con chevron en botón
     -   Función `changeLanguage(locale)` con fetch API
     -   Integración con ruta `/change-language`
     -   Recarga automática tras cambio de idioma
-    -   Indicador visual del idioma activo
+    -   Indicador visual del idioma activo en dropdown
 
 -   **Sistema de Notificaciones**
 
@@ -47,7 +47,112 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
     -   Preparado para integración con backend real
 
 -   **Menú de Usuario Rediseñado**
-    -   Avatar circular con iniciales del usuario
+    -   Avatar circular con iniciales del usuario (solo en botón)
+    -   Chevron para indicar dropdown
+    -   Información completa visible en dropdown:
+        -   Avatar grande con gradiente
+        -   Nombre completo del usuario
+        -   Email del usuario
+    -   Opciones del menú:
+        -   Ver perfil
+        -   Configuración
+        -   Cerrar sesión (estilo rojo)
+
+### 🎨 Mejorado
+
+#### Estilos CSS del Header
+
+-   **Layout Limpio y Profesional**
+
+    -   Header compacto con botones minimalistas
+    -   Solo información esencial visible (iconos, códigos)
+    -   Detalles completos dentro de dropdowns
+    -   Espaciado optimizado entre elementos
+    -   Avatares con gradiente y sombras suaves
+
+-   **Dropdowns Mejorados**
+
+    -   `.dropdown-menu-wide` para notificaciones (320px)
+    -   `.dropdown-menu-right` alineado a la derecha
+    -   Animación `slideDown` suave (0.2s ease)
+    -   Sombra elevada para profundidad visual
+    -   Border-radius 12px para modernidad
+    -   `.dropdown-header` con justify-between
+    -   `.dropdown-divider` para separar secciones
+    -   `.dropdown-footer` para enlaces de acción
+
+-   **Notificaciones Estilizadas**
+
+    -   `.notification-item` con layout flex
+    -   Background diferenciado para `.unread`
+    -   Iconos grandes (1.25rem) con colores según tipo
+    -   `.notification-text` y `.notification-time` con sizing apropiado
+    -   Hover state sutil para interactividad
+
+-   **Usuario Info Display**
+
+    -   `.dropdown-user-info` con avatar large y textos
+    -   `.dropdown-user-name` en bold
+    -   `.dropdown-user-email` en tamaño pequeño y color gris
+    -   Separación visual con padding generoso
+
+-   **Responsive y Accesibilidad**
+    -   Z-index 9999 para dropdowns sobre todo contenido
+    -   Transiciones suaves (0.2s ease) en todos los elementos
+    -   Colores de texto consistentes con variables CSS
+    -   Cursor pointer en elementos clickeables
+    -   Focus states implícitos para navegación por teclado
+
+### 🐛 Corregido
+
+-   **Selector de Idioma Duplicado**
+
+    -   Eliminado selector redundante en dashboard.blade.php
+    -   Consolidado selector único en header global
+    -   Mantenido solo dropdown limpio con banderas emoji
+
+-   **CSS Duplicado**
+
+    -   Eliminada sección duplicada de `.dropdown-menu` (líneas 858-1050)
+    -   Consolidadas reglas de dropdowns en una sola sección
+    -   Limpiados estilos de `.notification-item` duplicados
+    -   Removidos estilos redundantes de `.user-avatar-*`
+    -   CSS ahora es más mantenible y sin conflictos
+
+-   **Diseño del Header**
+    -   Simplificado botón de usuario (solo avatar + chevron)
+    -   Información de usuario movida exclusivamente al dropdown
+    -   Chevrons reducidos a 0.7rem para mejor proporción
+    -   Agregado `event.preventDefault()` en cambio de idioma
+    -   Botones más compactos y profesionales
+
+### 🔧 Técnico
+
+#### JavaScript Functions
+
+-   `toggleTheme()`: Alterna entre modo claro y oscuro, guarda en localStorage
+-   `changeLanguage(locale)`: POST request a backend con CSRF token, recarga página
+-   Ambas funciones expuestas en window global para uso en onclick
+-   Manejo de errores con console.error
+
+#### Estructura HTML (app.blade.php)
+
+-   Sección `.header-right` completamente implementada
+-   Uso de Font Awesome 6.5.1 para todos los iconos
+-   Blade directives para autenticación y datos de usuario
+-   Forms con CSRF para logout
+-   Dropdown menus con clase `.show` controlada por JS
+-   Preparado para datos dinámicos desde backend
+
+#### Optimizaciones
+
+-   CSS consolidado en una sola sección para dropdowns
+-   Eliminados selectores duplicados en vistas
+-   Assets recompilados con Vite para aplicar cambios
+-   Gradientes en avatares para mejor estética visual
+
+---
+
     -   Muestra nombre completo y email
     -   Dos tamaños de avatar (32px header, 48px dropdown)
     -   Opciones del menú:
