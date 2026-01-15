@@ -2,6 +2,14 @@
 
 @section('title', 'Crear Nuevo Prompt - PromptVault')
 
+@section('breadcrumbs')
+<a href="{{ route('prompts.index') }}" class="breadcrumb-item">
+    <i class="fas fa-file-alt"></i> Prompts
+</a>
+<span class="breadcrumb-separator">/</span>
+<span class="breadcrumb-item active">Crear</span>
+@endsection
+
 @section('content')
 <div class="page-header">
     <div>

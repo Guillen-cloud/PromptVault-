@@ -2,6 +2,12 @@
 
 @section('title', 'Mis Prompts')
 
+@section('breadcrumbs')
+<a href="{{ route('prompts.index') }}" class="breadcrumb-item active">
+    <i class="fas fa-file-alt"></i> Prompts
+</a>
+@endsection
+
 @section('content')
 <div class="page-header-actions">
     <div>

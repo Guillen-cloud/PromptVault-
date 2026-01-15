@@ -103,6 +103,17 @@
                     </div>
                 </div>
             </header>
+
+            <!-- Breadcrumbs -->
+            @if (!request()->routeIs('dashboard'))
+            <nav class="breadcrumbs">
+                <a href="{{ route('dashboard') }}" class="breadcrumb-item">
+                    <i class="fas fa-home"></i>
+                </a>
+                <span class="breadcrumb-separator">/</span>
+                @yield('breadcrumbs')
+            </nav>
+            @endif
             
             <!-- Page Content -->
             <div class="content-wrapper">

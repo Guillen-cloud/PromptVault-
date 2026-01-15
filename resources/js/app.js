@@ -11,15 +11,60 @@ function showToast(message, duration = 3000) {
     }, duration);
 }
 
-// Confirm delete actions
+// Loading spinner function
+function showLoading(button) {
+    const originalText = button.innerHTML;
+    button.disabled = true;
+    button.dataset.originalText = originalText;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...';
+    return originalText;
+}
+
+function hideLoading(button) {
+    if (button.dataset.originalText) {
+        button.innerHTML = button.dataset.originalText;
+        button.disabled = false;
+    }
+}
+
+// Confirm delete actions with SweetAlert2
 document.addEventListener('DOMContentLoaded', function() {
-    // Handle delete confirmations
+    // Handle delete confirmations with SweetAlert2
     const deleteForms = document.querySelectorAll('form[data-confirm]');
     deleteForms.forEach(form => {
         form.addEventListener('submit', function(e) {
+            e.preventDefault();
             const message = form.dataset.confirm || '¿Estás seguro de eliminar este elemento?';
-            if (!confirm(message)) {
-                e.preventDefault();
+            const title = form.dataset.confirmTitle || 'Confirmar eliminación';
+            
+            Swal.fire({
+                title: title,
+                text: message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '<i class="fas fa-trash"></i> Sí, eliminar',
+                cancelButtonText: '<i class="fas fa-times"></i> Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+    
+    // Add loading spinners to all form submit buttons
+    const forms = document.querySelectorAll('form:not([data-no-spinner])');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            // Skip if it's a delete form (handled above)
+            if (form.hasAttribute('data-confirm')) return;
+            
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn && !submitBtn.disabled) {
+                showLoading(submitBtn);
             }
         });
     });
