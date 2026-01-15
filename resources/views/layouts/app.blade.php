@@ -102,6 +102,104 @@
                         <input type="text" placeholder="Buscar prompts, categorías, etiquetas...">
                     </div>
                 </div>
+                
+                <div class="header-right">
+                    <!-- Theme Toggle -->
+                    <button class="header-btn" id="themeToggle" onclick="toggleTheme()">
+                        <i class="fas fa-moon theme-icon"></i>
+                    </button>
+                    
+                    <!-- Language Selector -->
+                    <div class="dropdown">
+                        <button class="header-btn" onclick="toggleDropdown('languageMenu', event)">
+                            <i class="fas fa-globe"></i>
+                            <span class="language-text">{{ strtoupper(app()->getLocale()) }}</span>
+                        </button>
+                        <div class="dropdown-menu" id="languageMenu">
+                            <a href="#" onclick="changeLanguage('es')" class="dropdown-item {{ app()->getLocale() === 'es' ? 'active' : '' }}">
+                                <i class="fas fa-flag"></i> Español
+                            </a>
+                            <a href="#" onclick="changeLanguage('en')" class="dropdown-item {{ app()->getLocale() === 'en' ? 'active' : '' }}">
+                                <i class="fas fa-flag"></i> English
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Notifications -->
+                    <div class="dropdown">
+                        <button class="header-btn" onclick="toggleDropdown('notificationsMenu', event)">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-wide" id="notificationsMenu">
+                            <div class="dropdown-header">
+                                <span>Notificaciones</span>
+                                <a href="#" class="mark-all-read">Marcar todas como leídas</a>
+                            </div>
+                            <div class="notification-item unread">
+                                <i class="fas fa-info-circle text-primary"></i>
+                                <div>
+                                    <p class="notification-text">Bienvenido a PromptVault</p>
+                                    <span class="notification-time">Hace 5 min</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <i class="fas fa-check-circle text-success"></i>
+                                <div>
+                                    <p class="notification-text">Prompt creado exitosamente</p>
+                                    <span class="notification-time">Hace 1 hora</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <i class="fas fa-share-alt text-info"></i>
+                                <div>
+                                    <p class="notification-text">Prompt compartido con el equipo</p>
+                                    <span class="notification-time">Hace 2 horas</span>
+                                </div>
+                            </div>
+                            <a href="#" class="dropdown-footer">Ver todas las notificaciones</a>
+                        </div>
+                    </div>
+                    
+                    <!-- User Menu -->
+                    <div class="dropdown">
+                        <button class="header-btn user-btn" onclick="toggleDropdown('userMenu', event)">
+                            <div class="user-avatar-small">
+                                <span>{{ auth()->check() ? strtoupper(substr(auth()->user()->name, 0, 2)) : 'U' }}</span>
+                            </div>
+                            <div class="user-info-header">
+                                <span class="user-name-header">{{ auth()->check() ? auth()->user()->name : 'Usuario' }}</span>
+                                <span class="user-role-header">Estudiante</span>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" id="userMenu">
+                            <div class="dropdown-user-info">
+                                <div class="user-avatar-large">
+                                    <span>{{ auth()->check() ? strtoupper(substr(auth()->user()->name, 0, 2)) : 'U' }}</span>
+                                </div>
+                                <div>
+                                    <p class="dropdown-user-name">{{ auth()->check() ? auth()->user()->name : 'Usuario' }}</p>
+                                    <p class="dropdown-user-email">{{ auth()->check() ? auth()->user()->email : '' }}</p>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ route('configuracion.index') }}" class="dropdown-item">
+                                <i class="fas fa-user-circle"></i> Mi Perfil
+                            </a>
+                            <a href="{{ route('configuracion.index') }}" class="dropdown-item">
+                                <i class="fas fa-cog"></i> Configuración
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-danger">
+                                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </header>
 
             <!-- Breadcrumbs -->

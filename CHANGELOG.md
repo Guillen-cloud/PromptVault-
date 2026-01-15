@@ -7,6 +7,122 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.4.0] - 2026-01-15
+
+### ✨ Añadido
+
+#### Header Rediseñado - Interfaz de Usuario Completa
+
+-   **Toggle de Tema (Modo Claro/Oscuro)**
+
+    -   Botón con icono de luna/sol en el header
+    -   Función `toggleTheme()` en app.js
+    -   Persistencia en localStorage
+    -   Cambio visual instantáneo sin recarga
+    -   Atributo `data-theme` en document para CSS personalizado
+
+-   **Selector de Idioma Mejorado**
+
+    -   Dropdown con banderas de España e Inglaterra
+    -   Muestra idioma actual con nombre completo (Español / English)
+    -   Función `changeLanguage(locale)` con fetch API
+    -   Integración con ruta `/change-language`
+    -   Recarga automática tras cambio de idioma
+    -   Indicador visual del idioma activo
+
+-   **Sistema de Notificaciones**
+
+    -   Dropdown de notificaciones con badge numérico
+    -   Badge rojo con contador de notificaciones no leídas
+    -   Tres tipos de notificaciones con iconos diferenciados:
+        -   Nuevo prompt compartido (azul)
+        -   Nueva versión disponible (verde)
+        -   Comentario recibido (info)
+    -   Cada notificación muestra:
+        -   Icono según tipo
+        -   Mensaje descriptivo
+        -   Timestamp relativo
+    -   Enlace "Ver todas" para página completa de notificaciones
+    -   Clases `.unread` para resaltar notificaciones pendientes
+    -   Preparado para integración con backend real
+
+-   **Menú de Usuario Rediseñado**
+    -   Avatar circular con iniciales del usuario
+    -   Muestra nombre completo y email
+    -   Dos tamaños de avatar (32px header, 48px dropdown)
+    -   Opciones del menú:
+        -   Ver perfil (icono usuario)
+        -   Configuración (icono engranaje)
+        -   Cerrar sesión (icono rojo, logout form)
+    -   Divider visual entre secciones
+    -   Hover states en todos los elementos
+    -   Avatar con fondo de color primario
+
+### 🎨 Mejorado
+
+#### Estilos CSS del Header
+
+-   **Layout y Posicionamiento**
+
+    -   `.header-right` con flex y gap consistente
+    -   `.header-btn` con padding, border-radius y transiciones
+    -   Hover states uniformes en todos los botones
+    -   Badge posicionado absolute para notificaciones
+    -   Avatares con border-radius circular perfecto
+
+-   **Dropdowns Mejorados**
+
+    -   `.dropdown-menu-wide` para notificaciones (320px)
+    -   `.dropdown-menu-right` alineado a la derecha
+    -   Animación `slideDown` suave (0.2s ease)
+    -   Sombra elevada para profundidad visual
+    -   Border-radius 12px para modernidad
+    -   `.dropdown-header` con justify-between
+    -   `.dropdown-divider` para separar secciones
+    -   `.dropdown-footer` para enlaces de acción
+
+-   **Notificaciones Estilizadas**
+
+    -   `.notification-item` con layout flex
+    -   Background diferenciado para `.unread`
+    -   Iconos grandes (1.25rem) con colores según tipo
+    -   `.notification-text` y `.notification-time` con sizing apropiado
+    -   Hover state sutil para interactividad
+
+-   **Usuario Info Display**
+
+    -   `.dropdown-user-info` con avatar large y textos
+    -   `.dropdown-user-name` en bold
+    -   `.dropdown-user-email` en tamaño pequeño y color gris
+    -   Separación visual con padding generoso
+
+-   **Responsive y Accesibilidad**
+    -   Z-index 9999 para dropdowns sobre todo contenido
+    -   Transiciones suaves (0.2s ease) en todos los elementos
+    -   Colores de texto consistentes con variables CSS
+    -   Cursor pointer en elementos clickeables
+    -   Focus states implícitos para navegación por teclado
+
+### 🔧 Técnico
+
+#### JavaScript Functions
+
+-   `toggleTheme()`: Alterna entre modo claro y oscuro, guarda en localStorage
+-   `changeLanguage(locale)`: POST request a backend con CSRF token, recarga página
+-   Ambas funciones expuestas en window global para uso en onclick
+-   Manejo de errores con console.error
+
+#### Estructura HTML (app.blade.php)
+
+-   Sección `.header-right` completamente implementada
+-   Uso de Font Awesome 6.5.1 para todos los iconos
+-   Blade directives para autenticación y datos de usuario
+-   Forms con CSRF para logout
+-   Dropdown menus con clase `.show` controlada por JS
+-   Preparado para datos dinámicos desde backend
+
+---
+
 ## [1.3.0] - 2026-01-15
 
 ### ✨ Añadido
