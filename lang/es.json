@@ -1,0 +1,18 @@
+{
+    "hours ago": "hace :count horas",
+    "hour ago": "hace :count hora",
+    "minutes ago": "hace :count minutos",
+    "minute ago": "hace :count minuto",
+    "seconds ago": "hace :count segundos",
+    "second ago": "hace :count segundo",
+    "days ago": "hace :count días",
+    "day ago": "hace :count día",
+    "weeks ago": "hace :count semanas",
+    "week ago": "hace :count semana",
+    "months ago": "hace :count meses",
+    "month ago": "hace :count mes",
+    "years ago": "hace :count años",
+    "year ago": "hace :count año",
+    "from now": "desde ahora",
+    "just now": "justo ahora"
+}
