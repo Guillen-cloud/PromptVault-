@@ -12,7 +12,9 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::withCount('prompts')->get();
+        $categorias = Categoria::withCount(['prompts' => function ($query) {
+            $query->where('user_id', auth()->id());
+        }])->get();
         return view('categorias.index', compact('categorias'));
     }
 
@@ -47,7 +49,9 @@ class CategoriaController extends Controller
      */
     public function show(Categoria $categoria)
     {
-        $categoria->load('prompts.etiquetas');
+        $categoria->load(['prompts' => function ($query) {
+            $query->where('user_id', auth()->id());
+        }, 'prompts.etiquetas']);
         return view('categorias.show', compact('categoria'));
     }
 

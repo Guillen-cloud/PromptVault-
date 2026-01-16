@@ -129,7 +129,7 @@
             <div class="prompt-card-header">
                 <div class="prompt-card-title">
                     <h3>{{ $prompt->titulo }}</h3>
-                    @if($prompt->favorito)
+                    @if($prompt->es_favorito)
                         <i class="fas fa-star" style="color: #fbbf24;"></i>
                     @endif
                 </div>
@@ -169,7 +169,7 @@
                     <button class="action-btn" onclick="copyToClipboard(`{{ addslashes($prompt->contenido) }}`)" title="Copiar">
                         <i class="fas fa-copy"></i>
                     </button>
-                    <button class="action-btn {{ $prompt->favorito ? 'active-fav' : '' }}" onclick="toggleFavorite({{ $prompt->id }})" title="Favorito">
+                    <button class="action-btn {{ $prompt->es_favorito ? 'active-fav' : '' }}" onclick="toggleFavorite({{ $prompt->id }})" title="Favorito">
                         <i class="fas fa-star"></i>
                     </button>
                     <a href="{{ route('prompts.show', $prompt) }}" class="action-btn" title="Ver">
@@ -501,6 +501,76 @@
 
 .pagination-wrapper {
     margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+/* Estilos para la paginación */
+.pagination-wrapper nav > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.pagination-wrapper p {
+    font-size: 0.875rem;
+    color: var(--text-medium);
+    margin: 0;
+}
+
+.pagination-wrapper div[role="navigation"] {
+    display: flex;
+    gap: 0.375rem;
+}
+
+.pagination-wrapper a,
+.pagination-wrapper span {
+    min-width: 2.25rem;
+    height: 2.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    border: 1px solid var(--border-gray);
+    background: white;
+    color: var(--text-dark);
+}
+
+.pagination-wrapper a:hover {
+    background: var(--primary-blue);
+    color: white;
+    border-color: var(--primary-blue);
+    transform: translateY(-1px);
+}
+
+.pagination-wrapper span[aria-current="page"] {
+    background: var(--primary-blue);
+    color: white;
+    border-color: var(--primary-blue);
+}
+
+.pagination-wrapper span:not([aria-current]):not([aria-disabled]) {
+    background: transparent;
+    border-color: transparent;
+    cursor: default;
+}
+
+.pagination-wrapper span[aria-disabled="true"] {
+    background: var(--bg-gray);
+    color: var(--text-light);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.pagination-wrapper svg {
+    width: 1rem;
+    height: 1rem;
 }
 
 /* Responsive */
@@ -518,6 +588,91 @@
 
 @push('scripts')
 <script>
+// Filtrado en tiempo real
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const categoriaRadios = document.querySelectorAll('input[name="categoria"]');
+    const iaDestinoRadios = document.querySelectorAll('input[name="ia_destino"]');
+    const favoritoCheckbox = document.querySelector('input[name="favorito"]');
+    const publicoCheckbox = document.querySelector('input[name="publico"]');
+    const compartidoCheckbox = document.querySelector('input[name="compartido"]');
+    const sortSelect = document.getElementById('sortBy');
+
+    // Función para aplicar filtros
+    function applyFilters() {
+        const params = new URLSearchParams();
+        
+        // Búsqueda
+        if (searchInput.value) {
+            params.set('search', searchInput.value);
+        }
+        
+        // Categoría
+        const categoriaSeleccionada = document.querySelector('input[name="categoria"]:checked')?.value;
+        if (categoriaSeleccionada) {
+            params.set('categoria_id', categoriaSeleccionada);
+        }
+        
+        // IA Destino
+        const iaSeleccionada = document.querySelector('input[name="ia_destino"]:checked')?.value;
+        if (iaSeleccionada) {
+            params.set('ia_destino', iaSeleccionada);
+        }
+        
+        // Favoritos
+        if (favoritoCheckbox?.checked) {
+            params.set('favoritos', '1');
+        }
+        
+        // Públicos
+        if (publicoCheckbox?.checked) {
+            params.set('publicos', '1');
+        }
+        
+        // Compartidos
+        if (compartidoCheckbox?.checked) {
+            params.set('compartidos', '1');
+        }
+        
+        // Ordenamiento
+        if (sortSelect?.value) {
+            params.set('sort', sortSelect.value);
+        }
+        
+        // Redireccionar con filtros
+        window.location.href = '{{ route("prompts.index") }}?' + params.toString();
+    }
+
+    // Event listeners
+    searchInput?.addEventListener('input', debounce(applyFilters, 500));
+    
+    categoriaRadios.forEach(radio => {
+        radio.addEventListener('change', applyFilters);
+    });
+    
+    iaDestinoRadios.forEach(radio => {
+        radio.addEventListener('change', applyFilters);
+    });
+    
+    favoritoCheckbox?.addEventListener('change', applyFilters);
+    publicoCheckbox?.addEventListener('change', applyFilters);
+    compartidoCheckbox?.addEventListener('change', applyFilters);
+    sortSelect?.addEventListener('change', applyFilters);
+    
+    // Función debounce para búsqueda
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+});
+
 function deletePromptFromList(id, titulo) {
     Swal.fire({
         title: '¿Eliminar prompt?',
@@ -564,12 +719,53 @@ function copyToClipboard(text) {
             toast: true,
             position: 'top-end'
         });
+    }).catch(err => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo copiar al portapapeles'
+        });
     });
 }
 
 function toggleFavorite(id) {
-    // Implementar llamada AJAX para marcar/desmarcar favorito
-    console.log('Toggle favorite:', id);
+    fetch(`/prompts/${id}/favorito`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Actualizar el ícono
+            const btn = event.target.closest('.action-btn');
+            btn.classList.toggle('active-fav');
+            
+            Swal.fire({
+                icon: 'success',
+                text: data.message,
+                timer: 2000,
+                showConfirmButton: false,
+                toast: true,
+                position: 'top-end'
+            });
+            
+            // Recargar si estamos filtrando favoritos
+            const favCheckbox = document.querySelector('input[name="favorito"]');
+            if (favCheckbox?.checked) {
+                setTimeout(() => location.reload(), 1000);
+            }
+        }
+    })
+    .catch(error => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo actualizar el favorito'
+        });
+    });
 }
 
 function clearFilters() {
@@ -581,6 +777,9 @@ function clearFilters() {
         input.checked = false;
     });
     document.getElementById('searchInput').value = '';
+    
+    // Redireccionar sin parámetros
+    window.location.href = '{{ route("prompts.index") }}';
 }
 
 @if(session('success'))

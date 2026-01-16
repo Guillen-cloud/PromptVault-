@@ -48,5 +48,11 @@
     "years ago": "hace :count años",
     "year ago": "hace :count año",
     "from now": "desde ahora",
-    "just now": "justo ahora"
+    "just now": "justo ahora",
+    "pagination.previous": "&laquo; Anterior",
+    "pagination.next": "Siguiente &raquo;",
+    "Showing": "Mostrando",
+    "to": "al",
+    "of": "de",
+    "results": "resultados"
 }

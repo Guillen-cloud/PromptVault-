@@ -11,7 +11,7 @@ class ActividadController extends Controller
 {
     public function index(Request $request)
     {
-        $userId = Auth::id() ?? 1;
+        $userId = auth()->id();
         $query = Actividad::with('prompt')->where('user_id', $userId);
 
         // Filtro por tipo de acción

@@ -14,13 +14,13 @@ class CompartidoController extends Controller
     {
         $compartidos = Compartido::with('prompt')
             ->whereHas('prompt', function ($query) {
-                $query->where('user_id', Auth::id() ?? 1);
+                $query->where('user_id', auth()->id());
             })
             ->latest()
             ->paginate(10);
 
         // Obtener todos los prompts del usuario para el modal
-        $prompts = Prompt::where('user_id', Auth::id() ?? 1)->get();
+        $prompts = Prompt::where('user_id', auth()->id())->get();
 
         return view('compartidos.index', compact('compartidos', 'prompts'));
     }
@@ -41,7 +41,7 @@ class CompartidoController extends Controller
         try {
             // Verificar que el prompt pertenece al usuario
             $prompt = Prompt::where('id', $validated['prompt_id'])
-                ->where('user_id', Auth::id() ?? 1)
+                ->where('user_id', auth()->id())
                 ->firstOrFail();
 
             // Crear el registro de compartido
@@ -73,7 +73,7 @@ class CompartidoController extends Controller
     {
         try {
             // Verificar que el prompt del compartido pertenece al usuario
-            if ($compartido->prompt->user_id !== (Auth::id() ?? 1)) {
+            if ($compartido->prompt->user_id !== auth()->id()) {
                 return back()->with('error', 'No tienes permiso para eliminar este registro');
             }
 

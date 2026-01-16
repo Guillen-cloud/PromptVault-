@@ -10,47 +10,38 @@
     </div>
 </div>
 
-<!-- Estadísticas del Usuario -->
-<div class="content-grid" style="margin-bottom: 1.5rem;">
-    <div class="card" style="grid-column: span 3;">
-        <div style="text-align: center;">
-            <i class="fas fa-file-alt" style="font-size: 2rem; color: var(--primary-blue); margin-bottom: 0.5rem;"></i>
-            <p style="font-size: 0.875rem; color: var(--text-gray); margin-bottom: 0.25rem;">Prompts Creados</p>
-            <p style="font-size: 1.75rem; font-weight: 700;">{{ $stats['total_prompts'] }}</p>
-        </div>
-    </div>
-    <div class="card" style="grid-column: span 3;">
-        <div style="text-align: center;">
-            <i class="fas fa-folder" style="font-size: 2rem; color: #f59e0b; margin-bottom: 0.5rem;"></i>
-            <p style="font-size: 0.875rem; color: var(--text-gray); margin-bottom: 0.25rem;">Categorías Usadas</p>
-            <p style="font-size: 1.75rem; font-weight: 700;">{{ $stats['categorias_usadas'] }}</p>
-        </div>
-    </div>
-    <div class="card" style="grid-column: span 3;">
-        <div style="text-align: center;">
-            <i class="fas fa-share-alt" style="font-size: 2rem; color: #10b981; margin-bottom: 0.5rem;"></i>
-            <p style="font-size: 0.875rem; color: var(--text-gray); margin-bottom: 0.25rem;">Compartidos</p>
-            <p style="font-size: 1.75rem; font-weight: 700;">{{ $stats['compartidos'] }}</p>
-        </div>
-    </div>
-    <div class="card" style="grid-column: span 3;">
-        <div style="text-align: center;">
-            <i class="fas fa-calendar" style="font-size: 2rem; color: #8b5cf6; margin-bottom: 0.5rem;"></i>
-            <p style="font-size: 0.875rem; color: var(--text-gray); margin-bottom: 0.25rem;">Miembro desde</p>
-            <p style="font-size: 1.25rem; font-weight: 700;">{{ $user->created_at->format('M Y') }}</p>
-        </div>
+<!-- Tabs de Navegación -->
+<div class="card" style="margin-bottom: 1.5rem;">
+    <div class="settings-tabs">
+        <button class="tab-btn active" data-tab="perfil">
+            <i class="fas fa-user"></i> Perfil
+        </button>
+        <button class="tab-btn" data-tab="preferencias">
+            <i class="fas fa-sliders-h"></i> Preferencias
+        </button>
+        <button class="tab-btn" data-tab="seguridad">
+            <i class="fas fa-shield-alt"></i> Seguridad
+        </button>
+        <button class="tab-btn" data-tab="estadisticas">
+            <i class="fas fa-chart-bar"></i> Estadísticas
+        </button>
+        <button class="tab-btn" data-tab="datos">
+            <i class="fas fa-database"></i> Datos
+        </button>
     </div>
 </div>
 
 <div class="content-grid">
-    <!-- Perfil de Usuario -->
-    <div class="card" style="grid-column: span 6;">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="fas fa-user"></i> Perfil de Usuario
-            </h3>
-        </div>
-        <div class="card-body">
+    <!-- Tab: Perfil de Usuario -->
+    <div class="tab-content" data-content="perfil" style="grid-column: span 12;">
+        <div class="content-grid">
+            <div class="card" style="grid-column: span 12;">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-user"></i> Información del Perfil
+                    </h3>
+                </div>
+                <div class="card-body">
             <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; background: #f8fafc; border-radius: 8px;">
                 <div style="width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-blue), #8b5cf6); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; font-weight: 700; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
                     {{ strtoupper(substr($user->name ?? 'UD', 0, 2)) }}
@@ -86,17 +77,21 @@
                     <i class="fas fa-save"></i> Guardar Cambios
                 </button>
             </form>
+                </div>
+            </div>
         </div>
     </div>
     
-    <!-- Preferencias -->
-    <div class="card" style="grid-column: span 6;">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="fas fa-sliders-h"></i> Preferencias
-            </h3>
-        </div>
-        <div class="card-body">
+    <!-- Tab: Preferencias -->
+    <div class="tab-content" data-content="preferencias" style="grid-column: span 12; display: none;">
+        <div class="content-grid">
+            <div class="card" style="grid-column: span 6;">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-sliders-h"></i> Preferencias Generales
+                    </h3>
+                </div>
+                <div class="card-body">
             <form action="{{ route('configuracion.updatePreferences') }}" method="POST">
                 @csrf
                 @method('PATCH')
@@ -152,17 +147,17 @@
                     <i class="fas fa-save"></i> Guardar Preferencias
                 </button>
             </form>
-        </div>
-    </div>
+                </div>
+            </div>
 
-    <!-- Notificaciones -->
-    <div class="card" style="grid-column: span 6;">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="fas fa-bell"></i> Notificaciones
-            </h3>
-        </div>
-        <div class="card-body">
+            <!-- Notificaciones -->
+            <div class="card" style="grid-column: span 6;">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-bell"></i> Configuración de Notificaciones
+                    </h3>
+                </div>
+                <div class="card-body">
             <form action="{{ route('configuracion.updateNotifications') }}" method="POST">
                 @csrf
                 @method('PATCH')
@@ -213,68 +208,117 @@
                     <i class="fas fa-save"></i> Guardar Notificaciones
                 </button>
             </form>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Seguridad -->
-    <div class="card" style="grid-column: span 6;">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="fas fa-shield-alt"></i> Seguridad
-            </h3>
-        </div>
-        <div class="card-body">
-            <form action="{{ route('configuracion.updatePassword') }}" method="POST">
-                @csrf
-                @method('PATCH')
-                
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fas fa-lock"></i> Contraseña Actual
-                    </label>
-                    <input type="password" name="current_password" class="form-input" placeholder="••••••••">
+    <!-- Tab: Seguridad -->
+    <div class="tab-content" data-content="seguridad" style="grid-column: span 12; display: none;">
+        <div class="content-grid">
+            <div class="card" style="grid-column: span 12;">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-shield-alt"></i> Configuración de Seguridad
+                    </h3>
                 </div>
+                <div class="card-body">
+                    <form action="{{ route('configuracion.updatePassword') }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-lock"></i> Contraseña Actual
+                            </label>
+                            <input type="password" name="current_password" class="form-input" placeholder="••••••••">
+                        </div>
 
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fas fa-key"></i> Nueva Contraseña
-                    </label>
-                    <input type="password" name="new_password" class="form-input" placeholder="••••••••">
-                    <small style="color: var(--text-gray);">Mínimo 8 caracteres</small>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-key"></i> Nueva Contraseña
+                            </label>
+                            <input type="password" name="new_password" class="form-input" placeholder="••••••••">
+                            <small style="color: var(--text-gray);">Mínimo 8 caracteres</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-check-circle"></i> Confirmar Contraseña
+                            </label>
+                            <input type="password" name="new_password_confirmation" class="form-input" placeholder="••••••••">
+                        </div>
+
+                        <button type="submit" class="btn" style="background: #ef4444; color: white;">
+                            <i class="fas fa-lock"></i> Cambiar Contraseña
+                        </button>
+                    </form>
+
+                    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-gray);">
+                        <h4 style="font-weight: 600; margin-bottom: 1rem;">
+                            <i class="fas fa-user-shield"></i> Autenticación de Dos Factores
+                        </h4>
+                        <p style="color: var(--text-gray); margin-bottom: 1rem;">Agrega una capa extra de seguridad a tu cuenta</p>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-mobile-alt"></i> Configurar 2FA
+                        </button>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fas fa-check-circle"></i> Confirmar Contraseña
-                    </label>
-                    <input type="password" name="new_password_confirmation" class="form-input" placeholder="••••••••">
-                </div>
-
-                <button type="submit" class="btn" style="background: #ef4444; color: white;">
-                    <i class="fas fa-lock"></i> Cambiar Contraseña
-                </button>
-            </form>
-
-            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-gray);">
-                <h4 style="font-weight: 600; margin-bottom: 1rem;">
-                    <i class="fas fa-user-shield"></i> Autenticación de Dos Factores
-                </h4>
-                <p style="color: var(--text-gray); margin-bottom: 1rem;">Agrega una capa extra de seguridad a tu cuenta</p>
-                <button class="btn btn-secondary">
-                    <i class="fas fa-mobile-alt"></i> Configurar 2FA
-                </button>
             </div>
         </div>
     </div>
     
-    <!-- Datos y Exportación -->
-    <div class="card" style="grid-column: span 6;">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="fas fa-database"></i> Gestión de Datos
-            </h3>
+    <!-- Tab: Estadísticas -->
+    <div class="tab-content" data-content="estadisticas" style="grid-column: span 12; display: none;">
+        <div class="content-grid">
+            <div class="card" style="grid-column: span 12;">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-chart-bar"></i> Estadísticas de tu Actividad
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div style="text-align: center; padding: 1.5rem; background: #f0f9ff; border-radius: 8px;">
+                            <i class="fas fa-file-alt" style="font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 0.75rem;"></i>
+                            <p style="font-size: 0.875rem; color: var(--text-gray); margin-bottom: 0.5rem;">Prompts Creados</p>
+                            <p style="font-size: 2rem; font-weight: 700; color: var(--primary-blue);">{{ $stats['total_prompts'] }}</p>
+                            <small style="color: var(--text-gray);">Total de prompts en tu biblioteca</small>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; background: #fffbeb; border-radius: 8px;">
+                            <i class="fas fa-folder" style="font-size: 2.5rem; color: #f59e0b; margin-bottom: 0.75rem;"></i>
+                            <p style="font-size: 0.875rem; color: var(--text-gray); margin-bottom: 0.5rem;">Categorías Usadas</p>
+                            <p style="font-size: 2rem; font-weight: 700; color: #f59e0b;">{{ $stats['categorias_usadas'] }}</p>
+                            <small style="color: var(--text-gray);">Diferentes categorías aplicadas</small>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; background: #f0fdf4; border-radius: 8px;">
+                            <i class="fas fa-share-alt" style="font-size: 2.5rem; color: #10b981; margin-bottom: 0.75rem;"></i>
+                            <p style="font-size: 0.875rem; color: var(--text-gray); margin-bottom: 0.5rem;">Compartidos</p>
+                            <p style="font-size: 2rem; font-weight: 700; color: #10b981;">{{ $stats['compartidos'] }}</p>
+                            <small style="color: var(--text-gray);">Prompts compartidos con otros</small>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; background: #faf5ff; border-radius: 8px;">
+                            <i class="fas fa-calendar" style="font-size: 2.5rem; color: #8b5cf6; margin-bottom: 0.75rem;"></i>
+                            <p style="font-size: 0.875rem; color: var(--text-gray); margin-bottom: 0.5rem;">Miembro desde</p>
+                            <p style="font-size: 1.5rem; font-weight: 700; color: #8b5cf6;">{{ $user->created_at->format('M Y') }}</p>
+                            <small style="color: var(--text-gray);">Fecha de registro</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
+    </div>
+    
+    <!-- Tab: Datos -->
+    <div class="tab-content" data-content="datos" style="grid-column: span 12; display: none;">
+        <div class="content-grid">
+            <div class="card" style="grid-column: span 12;">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-database"></i> Gestión y Exportación de Datos
+                    </h3>
+                </div>
+                <div class="card-body">
             <h4 style="font-weight: 600; margin-bottom: 1rem;">
                 <i class="fas fa-download"></i> Exportar Datos
             </h4>
@@ -311,11 +355,76 @@
                     <i class="fas fa-trash-alt"></i> Eliminar Cuenta y Datos
                 </button>
             </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+<style>
+.settings-tabs {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: white;
+    border: 2px solid var(--border-gray);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+    color: var(--text-gray);
+}
+
+.tab-btn:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+    transform: translateY(-2px);
+}
+
+.tab-btn.active {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+    color: white;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.tab-btn i {
+    margin-right: 0.5rem;
+}
+</style>
+
 <script>
+// Tabs functionality
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const targetTab = this.getAttribute('data-tab');
+        
+        // Remove active class from all tabs
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        
+        // Add active class to clicked tab
+        this.classList.add('active');
+        
+        // Hide all tab contents
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.style.display = 'none';
+        });
+        
+        // Show target tab content
+        const targetContent = document.querySelector(`[data-content="${targetTab}"]`);
+        if (targetContent) {
+            targetContent.style.display = 'block';
+        }
+    });
+});
+
 function confirmarEliminarCuenta() {
     Swal.fire({
         title: '⚠️ ¿Eliminar cuenta?',

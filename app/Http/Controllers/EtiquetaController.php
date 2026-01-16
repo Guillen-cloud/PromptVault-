@@ -9,7 +9,9 @@ class EtiquetaController extends Controller
 {
     public function index()
     {
-        $etiquetas = Etiqueta::withCount('prompts')->get();
+        $etiquetas = Etiqueta::withCount(['prompts' => function ($query) {
+            $query->where('user_id', auth()->id());
+        }])->get();
         return view('etiquetas.index', compact('etiquetas'));
     }
 }

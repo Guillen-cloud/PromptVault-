@@ -18,8 +18,7 @@ class PromptController extends Controller
     public function index(Request $request)
     {
         $query = Prompt::with(['categoria', 'etiquetas'])
-            ->where('user_id', auth()->id())
-            ->orWhere('es_publico', true);
+            ->where('user_id', auth()->id());
 
         // Búsqueda por palabra clave
         if ($request->filled('search')) {
@@ -53,11 +52,38 @@ class PromptController extends Controller
             $query->where('es_favorito', true);
         }
 
-        // Ordenamiento
-        $query->orderBy('updated_at', 'desc');
+        // Filtro de públicos
+        if ($request->boolean('publicos')) {
+            $query->where('es_publico', true);
+        }
 
-        $prompts = $query->paginate(10);
-        $categorias = Categoria::all();
+        // Filtro de compartidos
+        if ($request->boolean('compartidos')) {
+            $query->whereHas('compartidos');
+        }
+
+        // Ordenamiento
+        $sortBy = $request->get('sort', 'updated_at');
+        $sortDirection = 'desc';
+
+        switch ($sortBy) {
+            case 'titulo':
+                $query->orderBy('titulo', 'asc');
+                break;
+            case 'created_at':
+                $query->orderBy('created_at', 'desc');
+                break;
+            case 'veces_usado':
+                $query->orderBy('veces_usado', 'desc');
+                break;
+            default:
+                $query->orderBy('updated_at', 'desc');
+        }
+
+        $prompts = $query->paginate(10)->withQueryString();
+        $categorias = Categoria::withCount(['prompts' => function ($query) {
+            $query->where('user_id', auth()->id());
+        }])->get();
 
         return view('prompts.index', compact('prompts', 'categorias'));
     }
@@ -108,6 +134,11 @@ class PromptController extends Controller
      */
     public function show(Prompt $prompt)
     {
+        // Verificar que el usuario sea el dueño
+        if ($prompt->user_id !== auth()->id()) {
+            abort(403, 'No tienes permiso para ver este prompt');
+        }
+
         $prompt->load(['categoria', 'etiquetas', 'versiones', 'compartidos', 'actividades']);
         return view('prompts.show', compact('prompt'));
     }
@@ -117,6 +148,11 @@ class PromptController extends Controller
      */
     public function edit(Prompt $prompt)
     {
+        // Verificar que el usuario sea el dueño
+        if ($prompt->user_id !== auth()->id()) {
+            abort(403, 'No tienes permiso para editar este prompt');
+        }
+
         $categorias = Categoria::all();
         $etiquetas = Etiqueta::all();
 
@@ -128,6 +164,11 @@ class PromptController extends Controller
      */
     public function update(UpdatePromptRequest $request, Prompt $prompt)
     {
+        // Verificar que el usuario sea el dueño
+        if ($prompt->user_id !== auth()->id()) {
+            abort(403, 'No tienes permiso para actualizar este prompt');
+        }
+
         DB::beginTransaction();
         try {
             $validated = $request->validated();
@@ -169,6 +210,11 @@ class PromptController extends Controller
      */
     public function destroy(Prompt $prompt)
     {
+        // Verificar que el usuario sea el dueño
+        if ($prompt->user_id !== auth()->id()) {
+            abort(403, 'No tienes permiso para eliminar este prompt');
+        }
+
         try {
             $prompt->registrarActividad('eliminado', 'Prompt eliminado');
             $prompt->delete();
@@ -185,6 +231,11 @@ class PromptController extends Controller
      */
     public function use(Prompt $prompt)
     {
+        // Verificar que el usuario sea el dueño
+        if ($prompt->user_id !== auth()->id()) {
+            return response()->json(['error' => 'No autorizado'], 403);
+        }
+
         $prompt->incrementarUso();
 
         return response()->json([
@@ -198,12 +249,18 @@ class PromptController extends Controller
      */
     public function toggleFavorito(Prompt $prompt)
     {
+        // Verificar que el usuario sea el dueño
+        if ($prompt->user_id !== auth()->id()) {
+            return response()->json(['error' => 'No autorizado'], 403);
+        }
+
         $prompt->toggleFavorito();
 
-        return back()->with(
-            'success',
-            $prompt->es_favorito ? 'Agregado a favoritos' : 'Eliminado de favoritos'
-        );
+        return response()->json([
+            'success' => true,
+            'es_favorito' => $prompt->es_favorito,
+            'message' => $prompt->es_favorito ? 'Agregado a favoritos' : 'Eliminado de favoritos'
+        ]);
     }
 
     /**
@@ -211,6 +268,11 @@ class PromptController extends Controller
      */
     public function copy(Prompt $prompt)
     {
+        // Verificar que el usuario sea el dueño
+        if ($prompt->user_id !== auth()->id()) {
+            return response()->json(['error' => 'No autorizado'], 403);
+        }
+
         $prompt->incrementarUso();
 
         return response()->json([

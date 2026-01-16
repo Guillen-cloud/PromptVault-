@@ -11,14 +11,17 @@ class VersionController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Version::with('prompt');
+        $query = Version::with('prompt')
+            ->whereHas('prompt', function ($q) {
+                $q->where('user_id', auth()->id());
+            });
 
         if ($request->filled('prompt')) {
             $query->where('prompt_id', $request->prompt);
         }
 
         $versiones = $query->latest()->paginate(15);
-        $prompts = Prompt::all();
+        $prompts = Prompt::where('user_id', auth()->id())->get();
 
         return view('versiones.index', compact('versiones', 'prompts'));
     }
@@ -36,6 +39,11 @@ class VersionController extends Controller
                 ->with('error', 'La versión no tiene un prompt asociado válido.');
         }
 
+        // Verificar que el prompt pertenezca al usuario
+        if ($version->prompt->user_id !== auth()->id()) {
+            abort(403, 'No tienes permiso para ver esta versión');
+        }
+
         return view('versiones.show', compact('version'));
     }
 
@@ -50,6 +58,11 @@ class VersionController extends Controller
         if (!$version->prompt) {
             return redirect()->route('versiones.index')
                 ->with('error', 'La versión no tiene un prompt asociado válido.');
+        }
+
+        // Verificar que el prompt pertenezca al usuario
+        if ($version->prompt->user_id !== auth()->id()) {
+            abort(403, 'No tienes permiso para comparar esta versión');
         }
 
         $prompt = $version->prompt;
@@ -69,6 +82,11 @@ class VersionController extends Controller
             // Verificar que la versión tenga un prompt asociado
             if (!$prompt) {
                 return back()->with('error', 'La versión no tiene un prompt asociado válido.');
+            }
+
+            // Verificar que el prompt pertenezca al usuario
+            if ($prompt->user_id !== auth()->id()) {
+                abort(403, 'No tienes permiso para restaurar esta versión');
             }
 
             // Guardar la versión actual antes de restaurar
